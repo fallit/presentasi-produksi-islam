@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produksi Menurut Al-Qur'an dan Hadis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=LPMQ+IsepMisbah&display=swap" rel="stylesheet">
+    <style>
+        /* General Body and Container Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5; /* Light grey background for the whole page */
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            background-color: #ffffff; /* White background for the main content area */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Soft, prominent shadow */
+            overflow: hidden;
+        }
+
+        /* --- Global Headings & Text --- */
+        h1 {
+            font-size: 2.8em;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 5px solid #3498db;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+        h2 {
+            font-size: 2.2em;
+            color: #2980b9;
+            margin-top: 35px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2980b9;
+        }
+        h3 {
+            font-size: 1.6em;
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            background-color: #eaf2f8; /* Light blue for collapsible headings */
+            padding: 12px 20px;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        h3:hover {
+            background-color: #dbe9f5;
+            transform: translateY(-2px);
+        }
+        h3 .toggle-icon {
+            margin-right: 12px;
+            font-size: 0.9em;
+            color: #3498db;
+            font-weight: bold;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 30px;
+            padding-left: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* --- Explanation Content (Sub-chapter details) --- */
+        .explanation-content {
+            display: none;
+            padding: 20px;
+            border-left: 4px solid #b3e0ff; /* Lighter blue border */
+            margin-left: 20px;
+            background-color: #ffffff; /* White background for explanations */
+            border-radius: 0 0 10px 10px;
+            margin-top: -10px;
+            padding-top: 25px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.03);
+        }
+        .explanation-content.show {
+            display: block;
+        }
+        .explanation-text strong {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        /* --- Ayat & Hadis Blocks --- */
+        .ayat, .hadis {
+            background-color: #e3f2fd; /* Light blue */
+            border-left: 7px solid #2196f3; /* Stronger blue */
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+        .ayat .arabic-text, .hadis .arabic-text {
+            font-family: 'LPMQ IsepMisbah', serif; /* Specific Arabic font */
+            font-size: 2em;
+            text-align: right;
+            direction: rtl;
+            margin-bottom: 18px;
+            line-height: 1.8;
+            color: #1a237e;
+        }
+        .ayat .translation, .hadis .translation {
+            font-style: normal;
+            font-size: 1.1em;
+            color: #455a64;
+        }
+        .citation {
+            font-size: 0.9em;
+            color: #78909c;
+            text-align: right;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        /* --- Navigation & Buttons --- */
+        .navigation-bar {
+            text-align: center;
+            margin: 30px 0;
+            background-color: #4CAF50; /* Green background for nav bar */
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        .slide-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 17px;
+            margin: 5px 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .slide-button:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+        .slide-button.active {
+            background-color: #2980b9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transform: translateY(0);
+        }
+
+        .toggle-verse-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 0.95em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .toggle-verse-button:hover {
+            background-color: #45a049;
+            transform: translateY(-1px);
+        }
+        .verse-hadith-block-wrapper {
+            display: none;
+        }
+        .verse-hadith-block-wrapper.show {
+            display: block;
+        }
+
+        /* --- Slide Sections & Unique Backgrounds --- */
+        .slide-section {
+            display: none;
+            border: 1px solid #ddd;
+            padding: 30px;
+            margin-top: 25px;
+            border-radius: 15px;
+            background-color: #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: background-color 0.5s ease;
+        }
+        .slide-section.active {
+            display: block;
+        }
+
+        /* Specific themes for each slide (unique background colors) */
+        #quran { background-color: #e8f5e9; } /* Light green */
+        #hadis { background-color: #ffebee; } /* Light red/pink */
+        #principles { background-color: #e0f7fa; } /* Light cyan */
+        #goals { background-color: #fff3e0; } /* Light orange */
+        #types { background-color: #f3e5f5; } /* Light purple */
+        #challenges { background-color: #ffe0b2; } /* Light amber */
+
+        /* Image Styling */
+        .bab-illustration {
+            display: block;
+            max-width: 80%;
+            height: auto;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Summary Section Styling */
+        .summary-section {
+            background-color: #f1f8e9;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+        }
+        .summary-section h2 {
+            border-bottom: 2px solid #8bc34a;
+            color: #558b2f;
+        }
+        .summary-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .summary-list li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        .summary-list li::before {
+            content: '👉';
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        .summary-list a {
+            text-decoration: none;
+            color: #1976d2;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+        .summary-list a:hover {
+            color: #1565c0;
+            text-decoration: underline;
+        }
+        .summary-list span {
+            font-size: 0.9em;
+            color: #546e7a;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kegiatan Produksi Menurut Al-Qur'an dan Hadis</h1>
+
+        <p>Pada presentasi kali ini, kami akan menguraikan materi tentang konsep produksi dalam Islam, yang tidak hanya berorientasi pada keuntungan materi, tetapi juga terikat pada nilai-nilai etika dan moral yang bersumber dari Al-Qur'an dan Sunah Nabi. Tujuannya adalah untuk memenuhi kebutuhan manusia, memakmurkan bumi, serta mencapai keberkahan dari Allah SWT.</p>
+
+        <div class="summary-section">
+            <h2>Ringkasan Materi</h2>
+            <ul class="summary-list">
+                <li><a href="#" onclick="showSlide('quran', document.querySelector('.slide-button[data-slide-id=\'quran\']'))">Landasan Al-Qur’an tentang Produksi</a> <span>Memahami dasar-dasar produksi dari ayat-ayat suci Al-Qur'an.</span></li>
+                <li><a href="#" onclick="showSlide('hadis', document.querySelector('.slide-button[data-slide-id=\'hadis\']'))">Hadis Nabi tentang Produksi</a> <span>Mempelajari petunjuk praktis Nabi Muhammad SAW terkait kegiatan ekonomi.</span></li>
+                <li><a href="#" onclick="showSlide('principles', document.querySelector('.slide-button[data-slide-id=\'principles\']'))">Prinsip Produksi dalam Islam</a> <span>Menggali nilai-nilai etika dan moral yang harus dipegang dalam setiap proses produksi.</span></li>
+                <li><a href="#" onclick="showSlide('goals', document.querySelector('.slide-button[data-slide-id=\'goals\']'))">Tujuan Produksi Menurut Islam</a> <span>Mengenal tujuan hakiki dari kegiatan produksi yang melampaui keuntungan materi.</span></li>
+                <li><a href="#" onclick="showSlide('types', document.querySelector('.slide-button[data-slide-id=\'types\']'))">Macam-Macam Produksi dalam Islam</a> <span>Melihat berbagai jenis aktivitas produksi yang dianjurkan dalam perspektif Islam.</span></li>
+                <li><a href="#" onclick="showSlide('challenges', document.querySelector('.slide-button[data-slide-id=\'challenges\']'))">Tantangan Produksi di Masa Kini</a> <span>Menganalisis hambatan dan solusi untuk menerapkan prinsip produksi Islam di era modern.</span></li>
+            </ul>
+        </div>
+
+        <div class="navigation-bar">
+            <button class="slide-button active" data-slide-id="quran" onclick="showSlide('quran', this)">Landasan Al-Qur’an</button>
+            <button class="slide-button" data-slide-id="hadis" onclick="showSlide('hadis', this)">Hadis Nabi</button>
+            <button class="slide-button" data-slide-id="principles" onclick="showSlide('principles', this)">Prinsip Produksi</button>
+            <button class="slide-button" data-slide-id="goals" onclick="showSlide('goals', this)">Tujuan Produksi</button>
+            <button class="slide-button" data-slide-id="types" onclick="showSlide('types', this)">Macam-Macam Produksi</button>
+            <button class="slide-button" data-slide-id="challenges" onclick="showSlide('challenges', this)">Tantangan Produksi</button>
+        </div>
+
+        <div id="quran" class="slide-section active">
+            <h2>Landasan Al-Qur’an tentang Produksi</h2>
+            <img src="img/alquran.jpg" alt="Ilustrasi Al-Qur'an" class="bab-illustration">
+
+            <h3 onclick="toggleExplanation(this)">
+                <span class="toggle-icon">+</span> 1. Usaha dan Produktivitas Manusia
+            </h3>
+            <div class="explanation-content">
+                <p class="explanation-text">
+                    <strong>Manusia hanya akan memperoleh hasil dari apa yang telah diusahakannya, dan usahanya tersebut kelak akan diperlihatkan. Ini mendorong setiap individu untuk giat berusaha dan berinovasi dalam produksi.</strong>
+                </p>
+                <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Ayat</button>
+                <div class="verse-hadith-block-wrapper">
+                    <div class="ayat">
+                        <div class="arabic-text">
+                            وَأَنْ لَيْسَ لِلْإِنْسَانِ إِلَّا مَا سَعَى (39) وَأَنَّ سَعْيَهُ سَوْفَ يُرَى (40)
+                        </div>
+                        <div class="translation">
+                            Artinya: Dan bahwa manusia hanya memperoleh apa yang telah diusahakannya, dan sesungguhnya usahanya itu kelak akan diperlihatkan (kepadanya).
+                        </div>
+                        <div class="citation">QS. An-Najm (53): 39-40</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 onclick="toggleExplanation(this)">
+                <span class="toggle-icon">+</span> 2. Perintah untuk Bekerja Setelah Ibadah
+            </h3>
+            <div class="explanation-content">
+                <p class="explanation-text">
+                    <strong>Setelah menunaikan ibadah, umat Muslim diperintahkan untuk bertebaran di bumi mencari karunia Allah (rezeki). Ini menunjukkan bahwa kegiatan ekonomi produktif adalah bagian integral dari kehidupan seorang Muslim.</strong>
+                </p>
+                <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Ayat</button>
+                <div class="verse-hadith-block-wrapper">
+                    <div class="ayat">
+                        <div class="arabic-text">
+                            فَإِذَا قُضِيَتِ الصَّلَاةُ فَانْتَشِرُوا فِي الْأَرْضِ وَابْتَغُوا مِنْ فَضْلِ اللَّهِ وَاذْكُرُوا اللَّهَ كَثِيرًا لَعَلَّكُمْ تُفْلِحُونَ
+                        </div>
+                        <div class="translation">
+                            Artinya: Apabila salat telah dilaksanakan, maka bertebaranlah kamu di bumi; carilah karunia Allah dan ingatlah Allah banyak-banyak agar kamu beruntung.
+                        </div>
+                        <div class="citation">QS. Al-Jumu'ah (62): 10</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 onclick="toggleExplanation(this)">
+                <span class="toggle-icon">+</span> 3. Pemanfaatan Sumber Daya Alam
+            </h3>
+            <div class="explanation-content">
+                <p class="explanation-text">
+                    <strong>Allah SWT menjadikan bumi dan segala isinya sebagai hamparan dan rezeki bagi manusia. Kita diamanahkan untuk memanfaatkan sumber daya alam secara bijak, tidak merusak, dan menjadikannya produktif untuk kemaslahatan bersama.</strong>
+                </p>
+                <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Ayat</button>
+                <div class="verse-hadith-block-wrapper">
+                    <div class="ayat">
+                        <div class="arabic-text">
+                            الَّذِي جَعَلَ لَكُمُ الْأَرْضَ فِرَاشًا وَالسَّمَاءَ بِنَاءً وَأَنْزَلَ مِنَ السَّمَاءِ مَاءً فَأَخْرَجَ بِهِ مِنَ الثَّمَرَاتِ رِزْقًا لَكُمْ فَلَا تَجْعَلُوا لِلَّهِ أَنْدَادًا وَأَنْتُمْ تَعْلَمُونَ
+                        </div>
+                        <div class="translation">
+                            Artinya: Dialah (Allah) yang menjadikan bumi sebagai hamparan bagimu dan langit sebagai atap, dan Dialah yang menurunkan air (hujan) dari langit, lalu Dia hasilkan dengan (hujan) itu buah-buahan sebagai rezeki untukmu. Karena itu janganlah kamu mengadakan tandingan-tandingan bagi Allah, padahal kamu mengetahui.
+                        </div>
+                        <div class="citation">QS. Al-Baqarah (2): 22</div>
+                    </div>
+                    <div class="ayat">
+                        <div class="arabic-text">
+                            هُوَ الَّذِي جَعَلَ لَكُمُ الْأَرْضَ ذَلُولًا فَامْشُوا فِي مَنَاكِبِهَا وَكULŪ MIN RIZQIHĪ WA ILAYHIN-NUSYŪR
+                        </div>
+                        <div class="translation">
+                            Artinya: Dialah yang menjadikan bumi untuk kamu yang mudah dijelajahi, maka jelajahilah di segala penjurunya dan makanlah sebagian dari rezeki-Nya. Dan hanya kepada-Nya lah kamu (kembali setelah) dibangkitkan.
+                        </div>
+                        <div class="citation">QS. Al-Mulk (67): 15</div>
+                    </div>
+                    <div class="ayat">
+                        <div class="arabic-text">
+                            وَإِلَى ثَمُودَ أَخَاهُمْ صَالِحًا قَالَ يَا قَوْمِ اعْبُدُوا اللَّهَ مَا لَكُمْ مِنْ إِلَهٍ غَيْرُهُ هُوَ أَنْشَأَكُمْ مِنَ الْأَرْضِ وَاسْتَعْمَرَكُمْ فِيهَا فَاسْتَغْفِرُوهُ ثُمَّ تُوبُوا إِلَيْهِ إِنَّ رَبِّي قَرِيبٌ مُجِيبٌ
+                        </div>
+                        <div class="translation">
+                            Artinya: Dan kepada Kaum Tsamud (Kami utus) saudara mereka, Saleh. Dia berkata, “Wahai kaumku! Sembahlah Allah, tidak ada tuhan bagimu selain Dia. Dia telah menciptakanmu dari bumi (tanah) dan menjadikanmu pemakmurnya, karena itu mohonlah ampunan kepada-Nya, kemudian bertobatlah kepada-Nya. Sesungguhnya Tuhanku sangat dekat (rahmat-Nya) dan memperkenankan (doa hamba-Nya).”
+                        </div>
+                        <div class="citation">QS. Hud (11): 61</div>
+                    </div>
+                    <div class="ayat">
+                        <div class="arabic-text">
+                            وَالْأَنْعَامَ خَلَقَهَا لَكُمْ فِيهَا دِفْءٌ وَمَنَافِعُ وَمِنْهَا تَأْكُلُونَ
+                        </div>
+                        <div class="translation">
+                            Artinya: Dan Dia menciptakan hewan ternak untukmu; padanya ada kehangatan dan berbagai manfaat, dan sebagian kamu makan.
+                        </div>
+                        <div class="citation">QS. An-Nahl (16): 5</div>
+                    </div>
+                    <div class="ayat">
+                        <div class="arabic-text">
+                            وَعَلَّمْنَاهُ صَنْعَةَ لَبُوسٍ لَكُمْ لِتُحْصِنَكُم مِّنۢ بَأْسِكُمْ
+                        </div>
+                        <div class="translation">
+                            Artinya: Dan Kami ajarkan kepada Daud membuat baju besi untuk melindungimu dalam peperangan.
+                        </div>
+                        <div class="citation">QS. Al-Anbiya’ (21): 80</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="hadis" class="slide-section">
+            <h2>Hadis Nabi tentang Produksi</h2>
+            <img src="img/Hadist.jpg" alt="Ilustrasi Hadis" class="bab-illustration">
+
+            <h3 onclick="toggleExplanation(this)">
+                <span class="toggle-icon">+</span> 1. Nilai Usaha dan Ketekunan
+            </h3>
+            <div class="explanation-content">
+                <p class="explanation-text">
+                    <strong>Setiap Muslim didorong untuk bertekun dalam usaha yang telah diberikan rezeki kepadanya. Ketekunan ini adalah kunci keberhasilan dalam produksi.</strong>
+                </p>
+                <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Hadis</button>
+                <div class="verse-hadith-block-wrapper">
+                    <div class="hadis">
+                        <div class="arabic-text">
+                            قَالَ رَسُولُ اللَّهِ ﷺ: «مَنْ أُصِيبَ مِنْ شَيْءٍ فَلْيَلْزَمْهُ»
+                        </div>
+                        <div class="translation">
+                            Artinya: Rasulullah ﷺ bersabda: "Barangsiapa telah diberi rezeki dari satu sisi, hendaklah ia menekuninya."
+                        </div>
+                        <div class="citation">HR. Ibnu Majah, No. 2138</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 onclick="toggleExplanation(this)">
+                <span class="toggle-icon">+</span> 2. Profesi adalah Hal yang Terhormat
+            </h3>
+            <div class="explanation-content">
+                <p class="explanation-text">
+                    <strong>Pekerjaan apapun yang dilakukan dengan baik adalah mulia di mata Islam, sebagaimana Nabi Zakaria yang berprofesi sebagai tukang kayu. Ini menunjukkan bahwa semua jenis pekerjaan produktif dihargai.</strong>
+                </p>
+                <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Hadis</button>
+                <div class="verse-hadith-block-wrapper">
+                    <div class="hadis">
+                        <div class="arabic-text">
+                            قَالَ رَسُولُ اللَّهِ ﷺ: «كَانَ زَكَرِيَّا نَجَّارًا»
+                        </div>
+                        <div class="translation">
+                            Artinya: Rasulullah ﷺ bersabda: "Zakaria adalah seorang tukang kayu."
+                        </div>
+                        <div class="citation">HR. Ibnu Majah, No. 2141</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 onclick="toggleExplanation(this)">
+                <span class="toggle-icon">+</span> 3. Pertanian sebagai Amal Saleh
+            </h3>
+            <div class="explanation-content">
+                <p class="explanation-text">
+                    <strong>Menanam tanaman atau bercocok tanam yang hasilnya dimakan oleh makhluk Allah dianggap sebagai sedekah. Ini mendorong umat untuk aktif dalam sektor pertanian sebagai bentuk ibadah dan kontribusi sosial.</strong>
+                </p>
+                <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Hadis</button>
+                <div class="verse-hadith-block-wrapper">
+                    <div class="hadis">
+                        <div class="arabic-text">
+                            مَا مِنْ مُسْلِمٍ يَغْرِسُ غَرْسًا أَوْ يَزْرَعُ زَرْعًا فَيَأْكُلُ مِنْهُ طَيْرٌ أَوْ إِنْسَانٌ أَوْ بَهِيمَةٌ إِلَّا كَانَ لَهُ بِهِ صَدَقَةٌ
+                        </div>
+                        <div class="translation">
+                            Artinya: Tidaklah seorang muslimpun yang bercocok tanam atau menanam satu tanaman lalu tanaman itu dimakan oleh burung atau menusia atau hewan melainkan itu menjadi sedekah baginya.
+                        </div>
+                        <div class="citation">HR. Bukhari, No. 2152</div>
+                    </div>
+                    <div class="hadis">
+                        <div class="arabic-text">
+                            مَا مِنْ رَجُلٍ يَغْرِسُ غَرْسًا إِلَّا كَتَبَ اللَّهُ عَزَّ وَجَلَّ لَهُ مِنَ الْأَجْرِ قَدْرَ مَا يَخْرُجُ مِنْ ثَمَرِ ذَلِكَ الْغَرْسِ
+                        </div>
+                        <div class="translation">
+                            Artinya: Dari Abu Ayyub Al-Ansari dari Rasulullah Shallallahu ‘alaihi Wasallam bahwa beliau bersabda: “Tidaklah seseorang menanam tanaman kecuali Allah Azza wa Jalla mencatat pahala untuknya seukuran buah yang dikeluarkan oleh tanaman itu.”
+                        </div>
+                        <div class="citation">HR. Ahmad, No. 15063</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 onclick="toggleExplanation(this)">
+                <span class="toggle-icon">+</span> 4. Pengupahan yang Adil
+            </h3>
+            <div class="explanation-content">
+                <p class="explanation-text">
+                    <strong>Pekerja harus diberikan upah yang adil dan tidak ditunda. Menahan hak pekerja merupakan dosa besar yang akan dimintai pertanggungjawaban di Hari Kiamat.</strong>
+                </p>
+                <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Hadis</button>
+                <div class="verse-hadith-block-wrapper">
+                    <div class="hadis">
+                        <div class="arabic-text">
+                            أَعْطُوا الْعَامِلَ مِنْ عَمَلِهِ فَإِنَّ الْخَيِّبَ اللَّهَ لَمْ
+                        </div>
+                        <div class="translation">
+                            Artinya: Dari Abu Hurairah: dan dari Rasulullah Shallallahu ‘alaihi Wasallam, beliau bersabda: "Berilah orang yang bekerja dari pekerjaannya, karena sesungguhnya pekerja Allah tidaklah merugi."
+                        </div>
+                        <div class="citation">HR. Ahmad, No. 8250</div>
+                    </div>
+                    <div class="hadis">
+                        <div class="arabic-text">
+                            ثَلَاثَةٌ أَنَا خَصْمُهُمْ يَوْمَ الْقِيَامَةِ رَجُلٌ أَعْطَى بِي ثُمَّ غَدَرَ وَرَجُلٌ بَاعَ حُرًّا فَأَكَلَ ثَمَنَهُ وَرَجُلٌ اسْتَأْجَرَ أَجِيرًا فَاسْتَوْفَى مِنْهُ وَلَمْ يُعْطِ أَجْرَهُ
+                        </div>
+                        <div class="translation">
+                            Artinya: Dari Abu Hurairah Radliyallahu ‘anhu dari Nabi Shallallahu ‘alaihi Wasallam bersabda: "Allah Ta'ala berfirman: Ada tiga jenis orang yang Aku menjadi musuh mereka pada hari Kiamat, seseorang yang bersumpah atas namaku lalu mengingkarinya, seseorang yang menjual orang yang telah merdeka lalu memakan (uang dari) harganya, dan seseorang yang memperkerjakan pekerja kemudian pekerja itu menyelesaikan pekerjaannya namun tidak dibayar upahnya."
+                        </div>
+                        <div class="citation">HR. Bukhari, No. 2075</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 onclick="toggleExplanation(this)">
+                <span class="toggle-icon">+</span> 5. Industri Rumah Tangga
+            </h3>
+            <div class="explanation-content">
+                <p class="explanation-text">
+                    <strong>Contoh dari istri Nabi Muhammad SAW, Aisyah, yang aktif dalam pekerjaan rumah tangga dan produksi rumahan seperti menjahit, menunjukkan bahwa kegiatan produksi bisa dilakukan dalam skala kecil dan dari rumah.</strong>
+                </p>
+                <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Hadis</button>
+                <div class="verse-hadith-block-wrapper">
+                    <div class="hadis">
+                        <div class="arabic-text">
+                            كَانَتْ تَصْنَعُ أَشْيَاءَ كَثِيرةً، وَكَانَتْ تَعْمَلُ فِي الْبَيْتِ
+                        </div>
+                        <div class="translation">
+                            Artinya: Aisyah sering mengerjakan berbagai pekerjaan rumah dan produksi rumahan seperti menjahit.
+                        </div>
+                        <div class="citation">Hadis dari Aisyah radhiyallahu ‘anha</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 onclick="toggleExplanation(this)">
+                <span class="toggle-icon">+</span> 6. Profesionalisme (Al-Itqan)
+            </h3>
+            <div class="explanation-content">
+                <p class="explanation-text">
+                    <strong>Islam sangat menekankan kualitas dan kesempurnaan (itqan) dalam setiap pekerjaan. Profesionalisme dalam produksi adalah perintah agama yang membawa keberkahan.</strong>
+                </p>
+                <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Hadis</button>
+                <div class="verse-hadith-block-wrapper">
+                    <div class="hadis">
+                        <div class="arabic-text">
+                            إِنَّ اللَّهَ يُحِبُّ إِذَا عَمِلَ أَحَدُكُمْ عَمَلًا أَنْ يُتْقِنَهُ
+                        </div>
+                        <div class="translation">
+                            Artinya: Sesungguhnya Allah mencintai jika salah seorang di antara kalian melakukan suatu pekerjaan, ia melakukannya secara itqan (profesional dan sempurna).
+                        </div>
+                        <div class="citation">HR. Abu Ya’la</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 onclick="toggleExplanation(this)">
+                <span class="toggle-icon">+</span> 7. Memakmurkan dan Membangun Bumi
+            </h3>
+            <div class="explanation-content">
+                <p class="explanation-text">
+                    <strong>Setiap aktivitas pembangunan atau penanaman yang tidak mengandung unsur kezaliman akan mendatangkan pahala yang terus mengalir selama manfaatnya dirasakan oleh makhluk Allah. Ini menjadi motivasi untuk produksi yang berkelanjutan.</strong>
+                </p>
+                <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Hadis</button>
+                <div class="verse-hadith-block-wrapper">
+                    <div class="hadis">
+                        <div class="arabic-text">
+                            مَنْ بَنَى بُنْيَانًا مِنْ غَيْرِ ظُلْمٍ وَلَا اعْتِدَاءٍ أَوْ غَرَسَ غَرْسًا فِي غَيْرِ ظُلْمٍ وَلَا اعْتِدَاءٍ كَانَ لَهُ أَجْرٌ جَارٍ مَا انْتُفِعَ بِهِ مِنْ خَلْقِ اللَّهِ تَبَارَكَ وَتَعَالَى
+                        </div>
+                        <div class="translation">
+                            Artinya: Dari Sahl bin Mu'adz dari Bapaknya dari Rasulullah Shallallahu ‘alaihi Wasallam beliau bersabda: "Barangsiapa yang membuat bangunan tanpa ada kedzaliman dalam membuatnya, atau menganggu yang lainnya, atau menanam tanpa ada unsur kezaliman dan mengganggu yang lainnya, dia mendapatkan pahala yang mengalir selama hal itu dimanfaatkan oleh mahluk Allah Tabaroka Wa Ta'ala."
+                        </div>
+                        <div class="citation">HR. Ahmad, No. 15063</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="principles" class="slide-section">
+            <h2>Prinsip Produksi dalam Islam</h2>
+            <img src="img/prinsip syariah ilustrasi.jpg" alt="Ilustrasi Prinsip Syariah" class="bab-illustration">
+            <p><strong>Prinsip-prinsip produksi dalam Islam mengatur bagaimana kegiatan ekonomi seharusnya dijalankan agar sejalan dengan nilai-nilai syariah, memastikan keadilan, kebermanfaatan, dan keberlanjutan.</strong></p>
+            <ul>
+                <li>
+                    <h3 onclick="toggleExplanation(this)">
+                        <span class="toggle-icon">+</span> Efisiensi dan Profesionalitas
+                    </h3>
+                    <div class="explanation-content">
+                        <p class="explanation-text">
+                            <strong>Nabi menganjurkan untuk menekuni pekerjaan dan melakukannya dengan baik (al-itqan). Prinsip ini menekankan pentingnya kualitas dan kesempurnaan dalam setiap aspek produksi.</strong>
+                        </p>
+                        <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Hadis</button>
+                        <div class="verse-hadith-block-wrapper">
+                            <div class="hadis">
+                                <div class="arabic-text">
+                                    إِنَّ اللَّهَ يُحِبُّ إِذَا عَمِلَ أَحَدُكُمْ عَمَلًا أَنْ يُتْقِنَهُ
+                                </div>
+                                <div class="translation">
+                                    Artinya: Sesungguhnya Allah mencintai jika salah seorang di antara kalian melakukan suatu pekerjaan, ia melakukannya secara itqan (profesional dan sempurna).
+                                </div>
+                                <div class="citation">HR. Abu Ya’la</div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <h3 onclick="toggleExplanation(this)">
+                        <span class="toggle-icon">+</span> Larangan Menimbun & Anjuran Produktivitas
+                    </h3>
+                    <div class="explanation-content">
+                        <p class="explanation-text">
+                            <strong>Islam melarang menimbun harta yang tidak produktif dan menganjurkan untuk mengembangkan kekayaan melalui kegiatan produktif seperti pertanian, industri, perdagangan, dll. Tujuannya agar kekayaan tidak menumpuk pada segelintir orang.</strong>
+                        </p>
+                        <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Hadis</button>
+                        <div class="verse-hadith-block-wrapper">
+                            <div class="hadis">
+                                <div class="arabic-text">
+                                    عَنْ عُمَرَ بْنِ الْخَطَّابِ قَالَ قَالَ رَسُولُ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ الْجَالِبُ مَرْزُوقٌ وَالْمُحْتَكِرُ مَلْعُونٌ
+                                </div>
+                                <div class="translation">
+                                    Artinya: Dari Umar bin Khatab ia berkata, “Rasulullah ﷺ bersabda: ‘Orang yang mencari nafkah itu diberi rezeki dan orang yang menimbun itu dilaknat.’”
+                                </div>
+                                <div class="citation">HR. Ibnu Majah, No. 2144</div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <h3 onclick="toggleExplanation(this)">
+                        <span class="toggle-icon">+</span> Menghindari Penipuan dan Kecurangan
+                    </h3>
+                    <div class="explanation-content">
+                        <p class="explanation-text">
+                            <strong>Produksi harus dilakukan dengan jujur, tanpa mengurangi takaran atau timbangan, dan menghindari praktik penimbunan. Kejujuran adalah fondasi dalam transaksi ekonomi syariah.</strong>
+                        </p>
+                        <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Ayat</button>
+                        <div class="verse-hadith-block-wrapper">
+                            <div class="ayat">
+                                <div class="arabic-text">
+                                    وَيْلٌ لِلْمُطَفِّفِينَ (1) الَّذِينَ إِذَا اكْتَالُوا عَلَى النَّاسِ يَسْتَوْفُونَ (2) وَإِذَا كَالُوهُمْ أَوْ وَزَنُوهُمْ يُخْسِرُونَ (3) أَلَا يَظُنُّ أُولَئِكَ أَنَّهُمْ مَبْعُوثُونَ (4) لِيَوْمٍ عَظِيمٍ (5)
+                                </div>
+                                <div class="translation">
+                                    Artinya: Celakalah bagi orang-orang yang curang (dalam menakar dan menimbang)! (Yaitu) orang-orang yang apabila menerima takaran dari orang lain mereka minta dicukupkan, dan apabila mereka menakar atau menimbang (untuk orang lain), mereka mengurangi. Tidakkah mereka itu mengira, bahwa sesungguhnya mereka akan dibangkitkan, pada suatu hari yang besar.
+                                </div>
+                                <div class="citation">QS. Al-Mutaffifin (83): 1-5</div>
+                            </div>
+                            <div class="ayat">
+                                <div class="arabic-text">
+                                    وَإِلَى مَدْيَنَ أَخَاهُمْ شُعَيْبًا قَالَ يَا قَوْمِ اعْبُدُوا اللَّهَ مَا لَكُمْ مِنْ إِلَهٍ غَيْرُهُ وَلَا تَنْقُصُوا الْمِكْيَالَ وَالْمِيزَانَ إِنِّي أَرَاكُمْ بِخَيْرٍ وَإِنِّي أَخَافُ عَلَيْكُمْ عَذَابَ يَوْمٍ مُحِيطٍ (84) وَيَا قَوْمِ أَوْفُوا الْمِكْيَالَ وَالْمِيزَانَ بِالْقِسْطِ وَلَا تَبْخَسُوا النَّاسَ أَشْيَاءَهُمْ وَلَا تَعْثَوْا فِي الْأَرْضِ مُفْسِدِينَ (85)
+                                </div>
+                                <div class="translation">
+                                    Artinya: Dan kepada (penduduk) Madyan (Kami utus) saudara mereka, Syuaib. Dia berkata, "Wahai kaumku! Sembahlah Allah, tidak ada tuhan bagimu selain Dia. Dan janganlah kamu kurangi takaran dan timbangan. Sesungguhnya aku melihat kamu dalam keadaan yang baik (makmur). Dan sesungguhnya aku khawatir kamu akan ditimpa azab pada hari yang membinasakan (Kiamat).
+                                </div>
+                                <div class="citation">QS. Hud (11): 84-85</div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <h3 onclick="toggleExplanation(this)">
+                        <span class="toggle-icon">+</span> Distribusi Air Bersih
+                    </h3>
+                    <div class="explanation-content">
+                        <p class="explanation-text">
+                            <strong>Air merupakan sumber daya vital yang harus didistribusikan secara adil dan tidak boleh ditahan dari kebutuhan. Ini menunjukkan pentingnya akses merata terhadap sumber daya dasar dalam produksi.</strong>
+                        </p>
+                        <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Hadis</button>
+                        <div class="verse-hadith-block-wrapper">
+                            <div class="hadis">
+                                <div class="arabic-text">
+                                    عَنْ أَبِي هُرَيْرَةَ يَقُولَا قَالَ رَسُولُ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ لَا يُبَاعُ فَضْلُ الْمَاءِ لِيُبَاعَ بِهِ الْكَلَأُ
+                                </div>
+                                <div class="translation">
+                                    Artinya: Abu Hurairah berkata, “Rasulullah ﷺ bersabda: ‘Kelebihan air tidak boleh dijual agar rumput bisa dijual.’”
+                                </div>
+                                <div class="citation">HR. Muslim, Kitāb: Pengairan, Bāb: Haramnya Menjual Kelebihan Air, No. Hadits: 2929</div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div id="goals" class="slide-section">
+            <h2>Tujuan Produksi Menurut Islam</h2>
+            <img src="img/tujuan 2.jpg" alt="Ilustrasi Tujuan" class="bab-illustration">
+            <p><strong>Tujuan produksi dalam Islam melampaui sekadar keuntungan duniawi, berfokus pada keberkahan, kemaslahatan umat, dan pemakmuran bumi sebagai bentuk ibadah kepada Allah SWT.</strong></p>
+            <ul>
+                <li>
+                    <h3 onclick="toggleExplanation(this)">
+                        <span class="toggle-icon">+</span> Mencari Karunia Allah
+                    </h3>
+                    <div class="explanation-content">
+                        <p class="explanation-text">
+                            <strong>Produksi bukan hanya untuk keuntungan materi, melainkan juga bentuk ibadah mencari rezeki halal. Ini adalah landasan spiritual yang menjadikan setiap usaha bernilai ibadah.</strong>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <h3 onclick="toggleExplanation(this)">
+                        <span class="toggle-icon">+</span> Memberikan Manfaat Sosial
+                    </h3>
+                    <div class="explanation-content">
+                        <p class="explanation-text">
+                            <strong>Setiap produksi diarahkan untuk mendatangkan maslahat (kebaikan) dan menghindari kemudharatan (kerusakan), baik bagi pelaku maupun masyarakat. Ini menekankan aspek kebermanfaatan produk bagi komunitas.</strong>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <h3 onclick="toggleExplanation(this)">
+                        <span class="toggle-icon">+</span> Memakmurkan dan Membangun Bumi
+                    </h3>
+                    <div class="explanation-content">
+                        <p class="explanation-text">
+                            <strong>Produksi harus berkontribusi pada pembangunan dan kelestarian alam, bukan merusaknya. Ini sejalan dengan konsep khilafah (pemakmuran bumi) dalam Islam.</strong>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div id="types" class="slide-section">
+            <h2>Macam-Macam Produksi dalam Islam</h2>
+            <img src="img/macam macam.jpg" alt="Ilustrasi Macam-Macam Produksi" class="bab-illustration">
+            <p><strong>Islam mengakui berbagai jenis kegiatan produksi yang dapat dilakukan oleh manusia, semuanya diarahkan untuk memenuhi kebutuhan dan mencapai keberkahan, mulai dari sektor primer hingga industri dan kerajinan.</strong></p>
+            <ul>
+                <li>
+                    <h3 onclick="toggleExplanation(this)">
+                        <span class="toggle-icon">+</span> Pertanian dan Perkebunan
+                    </h3>
+                    <div class="explanation-content">
+                        <p class="explanation-text">
+                            <strong>Aktivitas menanam tanaman dianggap sebagai sedekah yang pahalanya terus mengalir selama dimanfaatkan oleh makhluk Allah, mendorong umat untuk aktif dalam sektor agrikultur.</strong>
+                        </p>
+                        <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Hadis</button>
+                        <div class="verse-hadith-block-wrapper">
+                            <div class="hadis">
+                                <div class="arabic-text">
+                                    مَا مِنْ مُسْلِمٍ يَغْرِسُ غَرْسًا أَوْ يَزْرَعُ زَرْعًا فَيَأْكُلُ مِنْهُ طَيْرٌ أَوْ إِنْسَانٌ أَوْ بَهِيمَةٌ إِلَّا كَانَ لَهُ بِهِ صَدَقَةٌ
+                                </div>
+                                <div class="translation">
+                                    Artinya: Tidaklah seorang Muslimpun yang bercocok tanam atau menanam satu tanaman lalu tanaman itu dimakan oleh burung atau menusia atau hewan melainkan itu menjadi sedekah baginya.
+                                </div>
+                                <div class="citation">HR. Bukhari, No. 2152</div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <h3 onclick="toggleExplanation(this)">
+                        <span class="toggle-icon">+</span> Peternakan
+                    </h3>
+                    <div class="explanation-content">
+                        <p class="explanation-text">
+                            <strong>Hewan ternak diciptakan Allah dengan berbagai manfaat, termasuk sebagai sumber makanan dan kehangatan. Ini mendorong pengembangan sektor peternakan sebagai sumber rezeki yang halal.</strong>
+                        </p>
+                        <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Ayat</button>
+                        <div class="verse-hadith-block-wrapper">
+                            <div class="ayat">
+                                <div class="arabic-text">
+                                    وَالْأَنْعَامَ خَلَقَهَا لَكُمْ فِيهَا دِفْءٌ وَمَنَافِعُ وَمِنْهَا تَأْكُلُونَ
+                                </div>
+                                <div class="translation">
+                                    Artinya: Dan Dia menciptakan hewan ternak untukmu; padanya ada kehangatan dan berbagai manfaat, dan sebagian kamu makan.
+                                </div>
+                                <div class="citation">QS. An-Nahl (16): 5</div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <h3 onclick="toggleExplanation(this)">
+                        <span class="toggle-icon">+</span> Industri dan Kerajinan
+                    </h3>
+                    <div class="explanation-content">
+                        <p class="explanation-text">
+                            <strong>Kemampuan membuat barang-barang industri dan kerajinan, seperti pembuatan baju besi oleh Nabi Daud, menunjukkan dukungan Islam terhadap pengembangan teknologi dan keahlian dalam produksi.</strong>
+                        </p>
+                        <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Ayat</button>
+                        <div class="verse-hadith-block-wrapper">
+                            <div class="ayat">
+                                <div class="arabic-text">
+                                    وَعَلَّمْنَاهُ صَنْعَةَ لَبُوسٍ لَكُمْ لِتُحْصِنَكُم مِّنۢ بَأْسِكُمْ
+                                </div>
+                                <div class="translation">
+                                    Artinya: Dan Kami ajarkan kepada Daud membuat baju besi untuk melindungimu dalam peperangan.
+                                </div>
+                                <div class="citation">QS. Al-Anbiya’ (21): 80</div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <h3 onclick="toggleExplanation(this)">
+                        <span class="toggle-icon">+</span> Industri Rumah Tangga
+                    </h3>
+                    <div class="explanation-content">
+                        <p class="explanation-text">
+                            <strong>Kegiatan produksi bisa juga dilakukan dalam skala rumah tangga, seperti yang dicontohkan oleh Aisyah yang aktif dalam pekerjaan dan produksi di rumah, menunjukkan fleksibilitas dalam mata pencarian.</strong>
+                        </p>
+                        <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Hadis</button>
+                        <div class="verse-hadith-block-wrapper">
+                            <div class="hadis">
+                                <div class="arabic-text">
+                                    كَانَتْ تَصْنَعُ أَشْيَاءَ كَثِيرةً، وَكَانَتْ تَعْمَلُ فِي الْبَيْتِ
+                                </div>
+                                <div class="translation">
+                                    Artinya: Aisyah sering mengerjakan berbagai pekerjaan rumah dan produksi rumahan seperti menjahit.
+                                </div>
+                                <div class="citation">Hadis dari Aisyah radhiyallahu ‘anha</div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <h3 onclick="toggleExplanation(this)">
+                        <span class="toggle-icon">+</span> Perdagangan dan Usaha Produktif
+                    </h3>
+                    <div class="explanation-content">
+                        <p class="explanation-text">
+                            <strong>Berbagai profesi dan usaha produktif, termasuk perdagangan dan pertukangan seperti Nabi Zakaria sebagai tukang kayu, adalah aktivitas yang mulia dan dianjurkan dalam Islam.</strong>
+                        </p>
+                        <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Hadis</button>
+                        <div class="verse-hadith-block-wrapper">
+                            <div class="hadis">
+                                <div class="arabic-text">
+                                    قَالَ رَسُولُ اللَّهِ ﷺ: «زَكَرِيَّا كَانَ نَجَّارًا»
+                                </div>
+                                <div class="translation">
+                                    Artinya: Nabi Zakaria adalah seorang tukang kayu.
+                                </div>
+                                <div class="citation">HR. Ibnu Majah, No. 2141</div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div id="challenges" class="slide-section">
+            <h2>Tantangan Produksi di Masa Kini</h2>
+            <img src="img/—Pngtree—unfair competition threatfunny bomb metaphor_7052705.jpg" alt="Ilustrasi Tantangan" class="bab-illustration">
+            <p><strong>Dalam upaya menerapkan prinsip produksi Islam di era modern, terdapat beberapa tantangan signifikan yang perlu diatasi untuk mencapai kemandirian dan keadilan ekonomi umat.</strong></p>
+            <h3 onclick="toggleExplanation(this)">
+                <span class="toggle-icon">+</span> Pengaruh Sistem Ekonomi Barat
+            </h3>
+            <div class="explanation-content">
+                <p class="explanation-text">
+                    <strong>Konsep kapitalisme dan sosialisme memengaruhi model ekonomi Islam sehingga menyebabkan hilangnya kepercayaan diri peneliti Muslim untuk menerapkan sistem Islam secara mandiri. Ini menimbulkan tantangan dalam membangun sistem ekonomi syariah yang mandiri.</strong>
+                </p>
+            </div>
+            <h3 onclick="toggleExplanation(this)">
+                <span class="toggle-icon">+</span> Minimnya Kemandirian Ekonomi Umat
+            </h3>
+            <div class="explanation-content">
+                <p class="explanation-text">
+                    <strong>Negara-negara Islam cenderung tidak stabil secara ekonomi, sehingga peran produksi terhambat dan menyebabkan ketergantungan pada impor, utang, dan teknologi luar. Ini menghambat pertumbuhan ekonomi internal dan kemandirian.</strong>
+                </p>
+            </div>
+            <h3 onclick="toggleExplanation(this)">
+                <span class="toggle-icon">+</span> Ketimpangan Akses terhadap Sumber Daya Alam
+            </h3>
+            <div class="explanation-content">
+                <p class="explanation-text">
+                    <strong>Banyak kekayaan negara berputar hanya di kalangan tertentu. Islam menegaskan bahwa harta tidak boleh hanya berputar di antara orang-orang kaya saja, menyoroti pentingnya distribusi kekayaan yang adil dalam produksi dan kepemilikan.</strong>
+                </p>
+                <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Ayat</button>
+                <div class="verse-hadith-block-wrapper">
+                    <div class="ayat">
+                        <div class="arabic-text">
+                            كَيْ لَا يَكُونَ دُولَةً بَيْنَ الْأَغْنِيَاءِ مِنكُمْ
+                        </div>
+                        <div class="translation">
+                            Artinya: Supaya harta itu tidak hanya berputar di antara orang-orang kaya saja di antara kamu.
+                        </div>
+                        <div class="citation">QS. Al-Hasyr (59): 7</div>
+                    </div>
+                </div>
+            </div>
+            <h3 onclick="toggleExplanation(this)">
+                <span class="toggle-icon">+</span> Kurangnya Etos Kerja dan Profesionalisme
+            </h3>
+            <div class="explanation-content">
+                <p class="explanation-text">
+                    <strong>Meskipun Islam sangat menganjurkan itqan (kesempurnaan) dalam bekerja, masih ditemukan kurangnya etos kerja dan profesionalisme di kalangan umat. Ini menjadi penghalang dalam mencapai kualitas produksi yang optimal.</strong>
+                </p>
+                <button class="toggle-verse-button" onclick="toggleVerseHadith(this)">Tampilkan Hadis</button>
+                <div class="verse-hadith-block-wrapper">
+                    <div class="hadis">
+                        <div class="arabic-text">
+                            إِنَّ اللَّهَ يُحِبُّ إِذَا عَمِلَ أَحَدُكُمْ عَمَلًا أَنْ يُتْقِنَهُ
+                        </div>
+                        <div class="translation">
+                            Artinya: Sesungguhnya Allah mencintai jika seseorang mengerjakan suatu pekerjaan, ia menyempurnakannya.
+                        </div>
+                        <div class="citation">HR. Abu Ya’la, tentang profesionalitas dan al-itqan</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSlide(slideId, clickedButton) {
+            // Hide all slide sections
+            var slides = document.getElementsByClassName('slide-section');
+            for (var i = 0; i < slides.length; i++) {
+                slides[i].classList.remove('active');
+                // Additionally, hide all explanation content and verse/hadith blocks when switching slides
+                const explanations = slides[i].querySelectorAll('.explanation-content');
+                explanations.forEach(exp => exp.classList.remove('show'));
+                const toggleIcons = slides[i].querySelectorAll('.toggle-icon');
+                toggleIcons.forEach(icon => icon.textContent = '+');
+
+                const verseHadithWrappers = slides[i].querySelectorAll('.verse-hadith-block-wrapper');
+                verseHadithWrappers.forEach(wrapper => wrapper.classList.remove('show'));
+                const verseButtons = slides[i].querySelectorAll('.toggle-verse-button');
+                verseButtons.forEach(btn => btn.textContent = 'Tampilkan Ayat/Hadis');
+            }
+
+            // Deactivate all navigation buttons
+            var buttons = document.getElementsByClassName('slide-button');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active');
+            }
+
+            // Show the selected slide
+            const activeSlide = document.getElementById(slideId);
+            activeSlide.classList.add('active');
+
+            // Activate the corresponding navigation button
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            } else {
+                // Fallback for direct links from summary
+                const navButton = document.querySelector(`.slide-button[data-slide-id='${slideId}']`);
+                if (navButton) {
+                    navButton.classList.add('active');
+                }
+            }
+
+            // Open the first explanation of the newly active slide
+            const firstHeadingInActiveSlide = activeSlide.querySelector('h3');
+            if (firstHeadingInActiveSlide) {
+                // Ensure it's not already open before calling toggleExplanation, to prevent closing if it was already default-open
+                if (!firstHeadingInActiveSlide.nextElementSibling.classList.contains('show')) {
+                    toggleExplanation(firstHeadingInActiveSlide);
+                }
+            }
+        }
+
+        function toggleExplanation(headingElement) {
+            const explanationContent = headingElement.nextElementSibling;
+            const toggleIcon = headingElement.querySelector('.toggle-icon');
+            const currentSlideSection = headingElement.closest('.slide-section');
+
+            // Check if the clicked explanation is currently open
+            const isCurrentlyOpen = explanationContent.classList.contains('show');
+
+            // Close all other explanations in the same slide section
+            const allExplanationContents = currentSlideSection.querySelectorAll('.explanation-content');
+            allExplanationContents.forEach(content => {
+                if (content.classList.contains('show')) {
+                    content.classList.remove('show');
+                    // Reset its toggle icon
+                    if (content.previousElementSibling && content.previousElementSibling.querySelector('.toggle-icon')) {
+                        content.previousElementSibling.querySelector('.toggle-icon').textContent = '+';
+                    }
+                    // Hide its verse/hadith blocks
+                    const innerVerseHadithWrappers = content.querySelectorAll('.verse-hadith-block-wrapper');
+                    innerVerseHadithWrappers.forEach(wrapper => wrapper.classList.remove('show'));
+                    const innerVerseButtons = content.querySelectorAll('.toggle-verse-button');
+                    innerVerseButtons.forEach(btn => btn.textContent = 'Tampilkan Ayat/Hadis');
+                }
+            });
+
+            // If the clicked explanation was not open, open it now
+            if (!isCurrentlyOpen) {
+                explanationContent.classList.add('show');
+                toggleIcon.textContent = '-';
+            }
+            // If it was already open, the above loop already closed it, and its icon is reset.
+        }
+
+        function toggleVerseHadith(buttonElement) {
+            const verseHadithWrapper = buttonElement.nextElementSibling;
+            if (verseHadithWrapper.classList.contains('show')) {
+                verseHadithWrapper.classList.remove('show');
+                buttonElement.textContent = 'Tampilkan Ayat/Hadis';
+            } else {
+                verseHadithWrapper.classList.add('show');
+                buttonElement.textContent = 'Sembunyikan Ayat/Hadis';
+            }
+        }
+
+        // Show the first slide and its first explanation by default when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            showSlide('quran', document.querySelector('.slide-button[data-slide-id="quran"]'));
+        });
+    </script>
+</body>
+</html>
